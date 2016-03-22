@@ -36,10 +36,6 @@ function compareDirectory(expected, location) {
     assert.deepEqual(actual, expected, location + ': Directory contents should match');
 }
 
-function compareContent(representation, location) {
-
-}
-
 function compareFileContent(expected, location) {
     var actual = fs.readFileSync(location, 'utf-8');
     assert.equal(actual, expected, 'File contents should match');
