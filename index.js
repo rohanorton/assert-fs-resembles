@@ -5,20 +5,31 @@ var _ = require('lodash');
 
 function resembles(representation, currentLocation) {
     currentLocation = currentLocation || '';
-    compareDirectory(_.keys(representation).sort(), currentLocation);
 
-    _.each(representation, function (content, key) {
-        var newLocation = path.join(currentLocation, key)
+    // Basic file comparison...
+    // [ 'filename1', 'filename2' ]
+    if (_.isArray(representation)) {
+        compareDirectory(representation.sort(), currentLocation);
 
-        if (_.isString(content)) {
-            compareFileContent(content, newLocation);
-        }
+    }
 
-        if (_.isObject(content)) {
-            resembles(content, newLocation);
-        }
-    });
-}
+    // Comparison with contents...
+    // { filename1: 'some content', filename2: 'some more content' }
+    else if (_.isObject(representation)) {
+        compareDirectory(_.keys(representation).sort(), currentLocation);
+
+        _.each(representation, function (content, key) {
+            var newLocation = path.join(currentLocation, key)
+
+            if (_.isString(content)) {
+                compareFileContent(content, newLocation);
+            }
+
+            if (_.isArray(content) ||  _.isObject(content)) {
+                resembles(content, newLocation);
+            }
+        });
+    } }
 
 function compareDirectory(expected, location) {
     var actual = fs.readdirSync(location).sort();
