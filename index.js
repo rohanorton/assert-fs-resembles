@@ -13,7 +13,17 @@ function isArray(something) {
 }
 
 function isString(something) {
-    return typeof something === 'string' || objectToString(something) === '[object String]';
+    return objectToString(something) === '[object String]';
+}
+
+function each(something, fn) {
+    if (isArray(something)) {
+        something.forEach(fn);
+    } else if (isObject(something)) {
+        Object.keys(something).forEach(function (key) {
+            fn(something[key], key);
+        });
+    }
 }
 
 function resembles(representation, currentLocation) {
@@ -31,14 +41,14 @@ function resembles(representation, currentLocation) {
     else if (isObject(representation)) {
         compareDirectory(Object.keys(representation).sort(), currentLocation);
 
-        representation.each(function (content, key) {
+        each(representation, function (content, key) {
             var newLocation = path.join(currentLocation, key)
 
             if (isString(content)) {
                 compareFileContent(content, newLocation);
             }
 
-            if (isArray(content) ||  isObject(content)) {
+            if (isArray(content) || isObject(content)) {
                 resembles(content, newLocation);
             }
         });
