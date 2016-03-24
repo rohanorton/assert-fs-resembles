@@ -1,31 +1,44 @@
 var fs = require('fs');
 var path = require('path');
 var assert = require('assert');
-var _ = require('lodash');
+
+var objectToString =  Object.prototype.toString
+
+function isObject(something) {
+    return objectToString.apply(something) === '[object Object]';
+}
+
+function isArray(something) {
+    return objectToString.apply(something) === '[object Array]';
+}
+
+function isString(something) {
+    return typeof something === 'string' || objectToString(something) === '[object String]';
+}
 
 function resembles(representation, currentLocation) {
     currentLocation = currentLocation || '';
 
     // Basic file comparison...
     // [ 'filename1', 'filename2' ]
-    if (_.isArray(representation)) {
+    if (isArray(representation)) {
         compareDirectory(representation.sort(), currentLocation);
 
     }
 
     // Comparison with contents...
     // { filename1: 'some content', filename2: 'some more content' }
-    else if (_.isObject(representation)) {
-        compareDirectory(_.keys(representation).sort(), currentLocation);
+    else if (isObject(representation)) {
+        compareDirectory(Object.keys(representation).sort(), currentLocation);
 
-        _.each(representation, function (content, key) {
+        representation.each(function (content, key) {
             var newLocation = path.join(currentLocation, key)
 
-            if (_.isString(content)) {
+            if (isString(content)) {
                 compareFileContent(content, newLocation);
             }
 
-            if (_.isArray(content) ||  _.isObject(content)) {
+            if (isArray(content) ||  isObject(content)) {
                 resembles(content, newLocation);
             }
         });
