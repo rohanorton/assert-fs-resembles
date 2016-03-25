@@ -16,3 +16,7 @@ assertFsResembles({
     }
 })
 ```
+
+I wrote this for testing
+[batch-file-renamer](https://github.com/rohanorton/batch-file-renamer), please
+feel free to check out how I've used it in the tests for that.
