@@ -1,13 +1,21 @@
 {
   "name": "assert-fs-resembles",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "Assertion that check state of filesystem directory",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rohanorton/assert-fs-resembles.git"
+  },
+  "author": "Rohan Orton",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rohanorton/assert-fs-resembles/issues"
+  },
+  "homepage": "https://github.com/rohanorton/assert-fs-resembles#readme",
   "dependencies": {
   },
   "devDependencies": {
