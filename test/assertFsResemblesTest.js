@@ -19,6 +19,11 @@ describe('assertFsResembles', function () {
             resembles({ foo: 'hi', bar: 'hello', baz: 'cia' });
         });
 
+        it('passes if nested directory contain all files/directories in array', function () {
+            mock({ this_is_a_dir: { foo: 'hi', bar: 'hello', baz: 'cia' } });
+            resembles({ this_is_a_dir: [ 'foo', 'bar', 'baz' ] });
+        });
+
         it('passes if nested directory content is same as specified in object', function () {
             mock({ this_is_a_dir: { foo: 'hi', deeper: { bar: 'hello', baz: 'cia' } } });
             resembles({ this_is_a_dir: { foo: 'hi', deeper: { bar: 'hello', baz: 'cia' } } });
