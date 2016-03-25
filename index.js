@@ -13,7 +13,7 @@ function isArray(something) {
 }
 
 function isString(something) {
-    return objectToString(something) === '[object String]';
+    return objectToString.apply(something) === '[object String]';
 }
 
 function each(something, fn) {
